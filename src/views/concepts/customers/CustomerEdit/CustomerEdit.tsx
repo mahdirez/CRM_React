@@ -27,7 +27,7 @@ const CustomerEdit = () => {
     const navigate = useNavigate()
 
     const { data, isLoading } = useSWR<SerajUsersResponse>(
-        [`/api/customers${id}`, { id: id as string }],
+        [`/api/customers/${id}`, { id: id as string }],
         ([, params]) =>
             apiGetCustomer<SerajUsersResponse, { id: string }>(
                 params as { id: string },
@@ -60,24 +60,55 @@ const CustomerEdit = () => {
             return
         }
 
-        const payload: UpdateCustomerPayload = {
-            first_name: values.firstName,
-            last_name: values.lastName,
-            national_id: values.nationalId,
-            phone: values.phone,
-            email: values.email,
-            type: values.type,
-            gender: values.gender,
-            status: values.status,
+        const originalValues = getDefaultValues()
+        if (!originalValues) {
+            return
         }
 
-        if (values.password) {
+        const payload: Partial<UpdateCustomerPayload> = {}
+
+        if (values.firstName !== originalValues.firstName) {
+            payload.first_name = values.firstName
+        }
+        if (values.lastName !== originalValues.lastName) {
+            payload.last_name = values.lastName
+        }
+        if (values.nationalId !== originalValues.nationalId) {
+            payload.national_id = values.nationalId
+        }
+        if (values.phone !== originalValues.phone) {
+            payload.phone = values.phone
+        }
+        if (values.email !== originalValues.email) {
+            payload.email = values.email
+        }
+        if (values.type !== originalValues.type) {
+            payload.type = values.type
+        }
+        if (values.gender !== originalValues.gender) {
+            payload.gender = values.gender
+        }
+        if (values.status !== originalValues.status) {
+            payload.status = values.status
+        }
+
+        if (values.password && values.password.trim() !== '') {
             payload.password = values.password
+        }
+
+        if (Object.keys(payload).length === 0) {
+            toast.push(
+                <Notification type="info">هیچ تغییری اعمال نشده است</Notification>,
+                {
+                    placement: 'top-center',
+                },
+            )
+            return
         }
 
         try {
             setIsSubmiting(true)
-            await apiUpdateCustomer(customerData.id, payload)
+            await apiUpdateCustomer(customerData.id, payload as UpdateCustomerPayload)
             toast.push(
                 <Notification type="success">تغییرات ذخیره شد!</Notification>,
                 {
