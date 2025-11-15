@@ -28,7 +28,7 @@ const CustomerDetails = () => {
         {
             revalidateOnFocus: false,
             revalidateIfStale: false,
-            evalidateOnFocus: false,
+            // evalidateOnFocus: false,
         },
     )
 

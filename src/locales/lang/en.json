@@ -14,14 +14,14 @@
             "image": "تصویر"
         },
         "conceptsCustomers": {
-            "customers": "مشتریان",
+            "customers": "کاربران",
             "customerList": "لیست",
             "customerEdit": "ویرایش",
             "customerCreate": "ایجاد",
             "customerDetails": "جزئیات"
         },
         "conceptsProducts": {
-            "products": "محصولات",
+            "products": "دانش اموزان",
             "productList": "لیست",
             "productEdit": "ویرایش",
             "productCreate": "ایجاد"
@@ -34,7 +34,7 @@
             "projectIssue": "مسئله"
         },
         "conceptsOrders": {
-            "orders": "سفارش‌ها",
+            "orders": "غذا",
             "orderList": "لیست",
             "orderEdit": "ویرایش",
             "orderDetails": "جزئیات",
