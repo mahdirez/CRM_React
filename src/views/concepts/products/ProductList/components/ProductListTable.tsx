@@ -7,7 +7,7 @@ import ConfirmDialog from '@/components/shared/ConfirmDialog'
 import useProductList from '../hooks/useProductList'
 import { Link, useNavigate } from 'react-router-dom'
 import cloneDeep from 'lodash/cloneDeep'
-import { TbPencil, TbTrash } from 'react-icons/tb'
+import { TbPencil, TbTrash, TbEye } from 'react-icons/tb'
 import Notification from '@/components/ui/Notification'
 import toast from '@/components/ui/toast'
 import { apiDeleteProduct } from '@/services/ProductService'
@@ -45,9 +45,11 @@ const NameColumn = ({ row }: { row: Product }) => {
 
 const ActionColumn = ({
     onEdit,
+    onViewDetail,
     onDelete,
 }: {
     onEdit: () => void
+    onViewDetail: () => void
     onDelete: () => void
 }) => {
     return (
@@ -59,6 +61,15 @@ const ActionColumn = ({
                     onClick={onEdit}
                 >
                     <TbPencil />
+                </div>
+            </Tooltip>
+            <Tooltip title="مشاهده کنید">
+                <div
+                    className={`text-xl cursor-pointer select-none font-semibold`}
+                    role="button"
+                    onClick={onViewDetail}
+                >
+                    <TbEye />
                 </div>
             </Tooltip>
             <Tooltip title="حذف کنید">
@@ -85,6 +96,10 @@ const ProductListTable = () => {
 
     const handleEdit = (product: Product) => {
         navigate(`/concepts/products/product-edit/${product.id}`)
+    }
+
+    const handleViewDetails = (product: Product) => {
+        navigate(`/concepts/products/product-details/${product.id}`)
     }
 
     const handleAskDelete = (product: Product) => {
@@ -205,6 +220,7 @@ const ProductListTable = () => {
                 cell: (props) => (
                     <ActionColumn
                         onEdit={() => handleEdit(props.row.original)}
+                        onViewDetail={() => handleViewDetails(props.row.original)}
                         onDelete={() => handleAskDelete(props.row.original)}
                     />
                 ),

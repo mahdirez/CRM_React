@@ -98,6 +98,17 @@ const conceptsRoute: Routes = [
         },
     },
     {
+        key: 'concepts.products.productDetails',
+        path: `${CONCEPTS_PREFIX_PATH}/products/product-details/:id`,
+        component: lazy(
+            () => import('@/views/concepts/products/ProductDetails'),
+        ),
+        authority: [ADMIN, USER],
+        meta: {
+            pageContainerType: 'contained',
+        },
+    },
+    {
         key: 'concepts.products.productCreate',
         path: `${CONCEPTS_PREFIX_PATH}/products/product-create`,
         component: lazy(
