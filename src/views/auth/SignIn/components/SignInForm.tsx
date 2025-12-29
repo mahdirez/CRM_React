@@ -19,14 +19,14 @@ interface SignInFormProps extends CommonProps {
 }
 
 type SignInFormSchema = {
-    email: string
+    phone: string
     password: string
 }
 
 const validationSchema: ZodType<SignInFormSchema> = z.object({
-    email: z
-        .string({ required_error: 'لطفا ایمیل خود را وارد کنید' })
-        .min(1, { message: 'لطفا ایمیل خود را وارد کنید' }),
+    phone: z
+        .string({ required_error: 'لطفا شماره تلفن خود را وارد کنید' })
+        .min(1, { message: 'لطفا شماره تلفن خود را وارد کنید' }),
     password: z
         .string({ required_error: 'لطفا رمز عبور خود را وارد کنید' })
         .min(1, { message: 'لطفا رمز عبور خود را وارد کنید' }),
@@ -43,8 +43,8 @@ const SignInForm = (props: SignInFormProps) => {
         control,
     } = useForm<SignInFormSchema>({
         defaultValues: {
-            email: 'admin-01@ecme.com',
-            password: '123Qwe',
+            phone: '09123456789',
+            password: 'password',
         },
         resolver: zodResolver(validationSchema),
     })
@@ -52,12 +52,12 @@ const SignInForm = (props: SignInFormProps) => {
     const { signIn } = useAuth()
 
     const onSignIn = async (values: SignInFormSchema) => {
-        const { email, password } = values
+        const { phone, password } = values
 
         if (!disableSubmit) {
             setSubmitting(true)
 
-            const result = await signIn({ email, password })
+            const result = await signIn({ phone, password })
 
             if (result?.status === 'failed') {
                 setMessage?.(result.message)
@@ -71,17 +71,17 @@ const SignInForm = (props: SignInFormProps) => {
         <div className={className} >
             <Form onSubmit={handleSubmit(onSignIn)}>
                 <FormItem
-                    label="ایمیل"
-                    invalid={Boolean(errors.email)}
-                    errorMessage={errors.email?.message}
+                    label="شماره تلفن"
+                    invalid={Boolean(errors.phone)}
+                    errorMessage={errors.phone?.message}
                 >
                     <Controller
-                        name="email"
+                        name="phone"
                         control={control}
                         render={({ field }) => (
                             <Input
-                                type="email"
-                                placeholder="ایمیل"
+                                type="tel"
+                                placeholder="شماره تلفن"
                                 autoComplete="off"
                                 {...field}
                             />

@@ -4,6 +4,9 @@ import FirebaseAuth from './FirebaseAuth'
 const googleAuthProvider = new GoogleAuthProvider()
 
 export const signInWithFirebaseGoogle = async () => {
+    if (!FirebaseAuth) {
+        throw new Error('Firebase Auth is not initialized. Please configure Firebase API keys.')
+    }
     try {
         const resp = await signInWithPopup(FirebaseAuth, googleAuthProvider)
         const token = await resp.user.getIdToken()

@@ -74,6 +74,7 @@ function AuthProvider({ children }: AuthProviderProps) {
         setToken('')
         setUser({})
         setSessionSignedIn(false)
+        // Don't clear auto-login flag - it should only run once when app first loads
     }
 
     const signIn = async (values: SignInCredential): AuthResult => {
